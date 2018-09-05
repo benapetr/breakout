@@ -18,7 +18,7 @@ struct Position
     int y;
 };
 
-int pad_size = 10;
+int pad_size = 15;
 int score = 0;
 int speed = 60;
 char s_ball = '@';
@@ -35,7 +35,7 @@ struct termios new_term_attr;
 int turbo = 0;
 int paused = 0;
 int quit = 0;
-int is_idle = 1;
+int is_idle = 0;
 char arena[MAX_HEIGHT][MAX_WIDTH];
 
 void move_ball();
@@ -126,6 +126,10 @@ int check_colision(int *x, int *y)
         if (ball_position.x >= pad_position.x && ball_position.x <= pad_position.x + pad_size)
         {
             *y = -1;
+            if (ball_position.x == pad_position.x || ball_position.x == pad_position.x + 1)
+                *x = -1;
+            else if (ball_position.x == pad_position.x + pad_size -1 || ball_position.x == pad_position.x + pad_size)
+                *x = 1;
             return_value = 1;
         }
     }
@@ -165,13 +169,8 @@ void game_over()
 
 void draw_pad()
 {
-    int offset = 0;
-    while (offset < pad_size)
-    {
-        // go to position
-        gotoxy(pad_position.x + offset++, pad_position.y);
-        printf("%c", s_pad);
-    }
+    gotoxy(pad_position.x, pad_position.y);
+    printf("<<===========>>");
     fflush(stdout);
 }
 
@@ -183,14 +182,14 @@ void move_pad(int direction)
             return;
         pad_position.x--;
         gotoxy(pad_position.x, pad_position.y);
-        printf("========== ");
+        printf("<<===========>> ");
     } else
     {
         if (pad_position.x + pad_size > screen_width - 2)
             return;
         pad_position.x++;
         gotoxy(pad_position.x - 1, pad_position.y);
-        printf(" ==========");
+        printf(" <<===========>>");
     }
     if (is_idle)
     {
