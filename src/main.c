@@ -331,6 +331,7 @@ int main(int argc, char **argv)
     if (screen_height >= MAX_HEIGHT)
         screen_height = MAX_HEIGHT - 1; 
     tcsetattr(fileno(stdin), TCSANOW, &new_term_attr);
+    fputs("\e[?25l", stdout);
     while (quit != 2)
     {
         new_game();
@@ -340,5 +341,6 @@ int main(int argc, char **argv)
     /* restore the original terminal attributes */
     clear();
     tcsetattr(fileno(stdin), TCSANOW, &orig_term_attr);
+    fputs("\e[?25h", stdout);
     return 0;
 }
