@@ -123,7 +123,7 @@ int check_colision(int *x, int *y)
     }
     if (direction_y > 0 && (ball_position.y == pad_position.y - 1))
     {
-        if (ball_position.x >= pad_position.x && ball_position.x <= pad_position.x + pad_size)
+        if (ball_position.x + direction_x >= pad_position.x && ball_position.x + direction_x <= pad_position.x + pad_size)
         {
             *y = -1;
             if (ball_position.x == pad_position.x || ball_position.x == pad_position.x + 1)
