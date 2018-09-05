@@ -186,7 +186,7 @@ void move_pad(int direction)
         printf("========== ");
     } else
     {
-        if (pad_position.x > screen_width - 3)
+        if (pad_position.x + pad_size > screen_width - 2)
             return;
         pad_position.x++;
         gotoxy(pad_position.x - 1, pad_position.y);
@@ -299,6 +299,7 @@ void new_game()
     } while (++ax < MAX_HEIGHT);
     direction_x = 1;
     direction_y = -1;
+    score = 0;
     clear();
     pad_position.x = screen_width / 2;
     pad_position.y = screen_height - 2;
